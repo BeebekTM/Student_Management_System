@@ -1,29 +1,31 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>Attendance Records</h1>
 
-<table border="1">
+<form method="GET">
+  <input type="date" name="date" />
 
-<tr>
+  <button type="submit">Filter</button>
+</form>
+
+<table border="1">
+  <tr>
     <th>Student</th>
     <th>Course</th>
     <th>Date</th>
     <th>Status</th>
-</tr>
+  </tr>
 
-{% for record in records %}
+  {% for record in records %}
 
-<tr>
+  <tr>
     <td>{{ record.student }}</td>
     <td>{{ record.course }}</td>
     <td>{{ record.date }}</td>
     <td>{{ record.status }}</td>
-</tr>
+  </tr>
 
-{% endfor %}
-
+  {% endfor %}
 </table>
 
 {% endblock %}

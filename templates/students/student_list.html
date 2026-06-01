@@ -1,6 +1,12 @@
 <h1>Student List</h1>
 <a href="{% url 'student_create' %}"> Add Student </a>
 
+<form method="GET">
+  <input type="text" name="q" placeholder="Search Student" />
+
+  <button type="submit">Search</button>
+</form>
+
 <table border="1">
   <tr>
     <th>Name</th>

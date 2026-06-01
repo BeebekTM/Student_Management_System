@@ -1,29 +1,39 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <h1>Grades</h1>
 
 <table border="1">
+  <form method="GET">
+    <select name="course">
+      <option value="">All Courses</option>
 
-<tr>
+      {% for course in courses %}
+
+      <option value="{{ course.id }}">{{ course.name }}</option>
+
+      {% endfor %}
+    </select>
+
+    <button type="submit">Filter</button>
+  </form>
+
+  <tr>
     <th>Student</th>
     <th>Course</th>
     <th>Marks</th>
     <th>Grade</th>
-</tr>
+  </tr>
 
-{% for grade in grades %}
+  {% for grade in grades %}
 
-<tr>
+  <tr>
     <td>{{ grade.student }}</td>
     <td>{{ grade.course }}</td>
     <td>{{ grade.marks }}</td>
     <td>{{ grade.grade }}</td>
-</tr>
+  </tr>
 
-{% endfor %}
-
+  {% endfor %}
 </table>
 
 {% endblock %}

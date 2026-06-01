@@ -26,14 +26,22 @@ def attendance_create(request):
     )
 
 
+
 def attendance_list(request):
+
+    date = request.GET.get('date')
 
     records = Attendance.objects.all()
 
+    if date:
+        records = records.filter(
+            date=date
+        )
+
     return render(
         request,
-        "attendance/attendance_list.html",
+        'attendance/attendance_list.html',
         {
-            "records": records
+            'records': records
         }
     )

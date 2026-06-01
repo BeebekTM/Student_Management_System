@@ -5,13 +5,23 @@ from django.shortcuts import get_object_or_404
 
 
 def student_list(request):
+
+    query = request.GET.get('q')
+
     students = Student.objects.all()
 
-    print(students)  # DEBUG (important)
+    if query:
+        students = students.filter(
+            name__icontains=query
+        )
 
-    return render(request, 'students/student_list.html', {
-        'students': students
-    })
+    return render(
+        request,
+        'students/student_list.html',
+        {
+            'students': students
+        }
+    )
 
 def student_create(request):
 

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import GradeForm
 from .models import Grade
+from courses.models import Course
 
 
 def grade_create(request):
@@ -25,10 +26,22 @@ def grade_create(request):
 
 def grade_list(request):
 
+    course_id = request.GET.get('course')
+
     grades = Grade.objects.all()
+
+    if course_id:
+        grades = grades.filter(
+            course_id=course_id
+        )
+
+    courses = Course.objects.all()
 
     return render(
         request,
         'grades/grade_list.html',
-        {'grades': grades}
+        {
+            'grades': grades,
+            'courses': courses
+        }
     )
