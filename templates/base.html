@@ -1,45 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
+  <head>
     <title>SMS</title>
 
     {% load static %}
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
 
-<body>
-
-<div class="container">
-
-    <div class="sidebar">
-
+  <body>
+    <div class="container">
+      <div class="sidebar">
         <h2>SMS</h2>
 
         <a href="{% url 'dashboard' %}">Dashboard</a>
 
         <a href="{% url 'student_list' %}">Students</a>
 
-        <a href="#">Courses</a>
+        <a href="{% url 'attendance_list' %}"> Attendance </a>
 
-        <a href="#">Attendance</a>
+        <a href="{% url 'attendance_create' %}"> Mark Attendance </a>
+
+        <a href="#">Courses</a>
 
         <a href="#">Grades</a>
 
-        <a href="{% url 'logout' %}">
-            Logout
-        </a>
+        <a href="{% url 'logout' %}"> Logout </a>
+      </div>
 
+      <div class="content">{% block content %} {% endblock %}</div>
     </div>
-
-    <div class="content">
-
-        {% block content %}
-        {% endblock %}
-
-    </div>
-
-</div>
-
-</body>
+  </body>
 </html>
