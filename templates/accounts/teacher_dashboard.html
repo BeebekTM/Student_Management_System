@@ -1,7 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 <h1>Teacher Dashboard</h1>
 
-<p>Welcome {{ request.user.username }}</p>
+<p>
+Welcome {{ request.user.username }}
+</p>
 
-<a href="{% url 'logout' %}">
-    Logout
-</a>
+
+<div class="card">
+    Total Students : {{ student_count}}
+</div>
+
+<div class="card">
+    Total Courses
+</div>
+
+<div class="card">
+    Total Teachers
+</div>
+
+{% endblock %}
