@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.core.mail import send_mail
+
 from .models import Student
 from .form import StudentForm
-from django.shortcuts import get_object_or_404
 
 
 def student_list(request):
@@ -23,13 +24,25 @@ def student_list(request):
         }
     )
 
+
 def student_create(request):
 
     if request.method == 'POST':
+
         form = StudentForm(request.POST)
 
         if form.is_valid():
-            form.save()
+
+            student = form.save()
+
+            send_mail(
+                subject='Welcome to SMS',
+                message=f'Hello {student.name}, welcome to Student Management System.',
+                from_email='admin@sms.com',
+                recipient_list=[student.email],
+                fail_silently=False,
+            )
+
             return redirect('student_list')
 
     else:
@@ -38,40 +51,64 @@ def student_create(request):
     return render(
         request,
         'students/student_form.html',
-        {'form': form}
+        {
+            'form': form
+        }
     )
 
 
 def student_update(request, pk):
 
-    student = get_object_or_404(Student, pk=pk)
+    student = get_object_or_404(
+        Student,
+        pk=pk
+    )
 
-    if request.method == "POST":
-        form = StudentForm(request.POST, instance=student)
+    if request.method == 'POST':
+
+        form = StudentForm(
+            request.POST,
+            instance=student
+        )
 
         if form.is_valid():
             form.save()
-            return redirect("student_list")
+            return redirect('student_list')
 
     else:
-        form = StudentForm(instance=student)
+
+        form = StudentForm(
+            instance=student
+        )
 
     return render(
         request,
-        "students/student_form.html",
-        {"form": form}
+        'students/student_form.html',
+        {
+            'form': form
+        }
     )
+
 
 def student_delete(request, pk):
 
-    student = get_object_or_404(Student, pk=pk)
+    student = get_object_or_404(
+        Student,
+        pk=pk
+    )
 
-    if request.method == "POST":
+    if request.method == 'POST':
+
         student.delete()
-        return redirect("student_list")
+
+        return redirect(
+            'student_list'
+        )
 
     return render(
         request,
-        "students/student_confirm_delete.html",
-        {"student": student}
+        'students/student_confirm_delete.html',
+        {
+            'student': student
+        }
     )
